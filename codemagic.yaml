@@ -1,0 +1,23 @@
+workflows:
+ my-workflow:
+  environment:
+    node: 16.9.0
+    npm: latest
+    groups:
+      - saucelabs_credentials
+  scripts:
+      - name: Build Android APK
+        working_directory: android
+        script: ./gradlew assembleDebug
+      - name: Install SauceCTL
+        script: npm install -g saucectl
+      - name: Initialize SauceCTL
+        script: saucectl init --username $SAUCE_USERNAME --accessKey $SAUCE_ACCESS_KEY
+      - name: Fetch SauceCTL config
+        script: curl https://github.com/StuMinch/codemagic-example/blob/main/config.yml
+      - name: Run SauceCTL
+        script: saucectl run -c config.yml
+  artifacts:
+      - app/build/outputs/**/**/*.apk
+        
+  
