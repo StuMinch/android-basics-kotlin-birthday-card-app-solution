@@ -4,7 +4,7 @@ workflows:
     node: 16.9.0
     npm: latest
     groups:
-      - saucelabs_credentials
+      - sauce_credentials
   scripts:
       - name: Build Android APK
         working_directory: android
